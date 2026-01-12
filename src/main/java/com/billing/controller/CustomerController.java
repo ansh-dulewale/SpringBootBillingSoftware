@@ -20,7 +20,6 @@ public class CustomerController {
         this.service = service;
     }
 
-    // POST /customer
     @PostMapping
     public ResponseEntity<Customer> createCustomer(
             @RequestBody Customer customer) {
@@ -31,7 +30,6 @@ public class CustomerController {
         );
     }
 
-    // PUT /customer/{id}
     @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(
             @PathVariable int id,
@@ -41,14 +39,10 @@ public class CustomerController {
                 service.updateService(id, customer)
         );
     }
-
-    // GET /customer
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         return ResponseEntity.ok(service.getAllService());
     }
-
-    // GET /customer/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(
             @PathVariable int id) {
