@@ -1,18 +1,21 @@
 package com.billing.entity;
 
 public class Customer {
+
     private int id;
     private String name;
     private long phone;
     private String email;
     private String address;
 
-    public Customer(int id, String address, String email, long phone, String name) {
+    public Customer() {}
+
+    public Customer(int id, String name, long phone, String email, String address) {
         this.id = id;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
         this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
 
     public int getId() {
@@ -23,20 +26,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getName() {
+        return name;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getPhone() {
@@ -47,11 +42,19 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

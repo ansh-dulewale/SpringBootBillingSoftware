@@ -13,41 +13,47 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
+
     private final CustomerService service;
 
     public CustomerController(CustomerService service) {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
-        try{
-            return new ResponseEntity<>(service.addService(customer), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    // POST /customer
+    @PostMapping
+    public ResponseEntity<Customer> createCustomer(
+            @RequestBody Customer customer) {
+
+        return new ResponseEntity<>(
+                service.addService(customer),
+                HttpStatus.CREATED
+        );
     }
 
+    // PUT /customer/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, Customer customer){
-        try{
-            return new ResponseEntity<>(service.updateService(customer), HttpStatus.ACCEPTED);
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Customer> updateCustomer(
+            @PathVariable int id,
+            @RequestBody Customer customer) {
+
+        return ResponseEntity.ok(
+                service.updateService(id, customer)
+        );
     }
 
+    // GET /customer
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllController(){
-            return ResponseEntity.ok(service.getAllService());
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return ResponseEntity.ok(service.getAllService());
     }
 
+    // GET /customer/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getbyIdController(@PathVariable int id){
-        try{
-            return ResponseEntity.ok(service.getByIdService(id));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<Customer> getCustomerById(
+            @PathVariable int id) {
+
+        return ResponseEntity.ok(service.getByIdService(id));
     }
 }
+

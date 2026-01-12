@@ -8,34 +8,35 @@ import java.util.List;
 
 @Repository
 public class CustomerRepository {
-    List<Customer> customers = new ArrayList<>();
+
+    private final List<Customer> customers = new ArrayList<>();
 
     public Customer add(Customer customer) {
         customers.add(customer);
         return customer;
     }
 
-    public Customer findByid(int id){
-        return customers.stream().filter(c -> c.getId() == id).findFirst().orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+    public Customer findById(int id) {
+        return customers.stream()
+                .filter(c -> c.getId() == id)
+                .findFirst()
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer not found"));
     }
 
-    public Customer updatedetail(Customer customer){
-        Customer existing = findByid(customer.getId());
-        if(existing != null){
-            existing.setId(customer.getId());
-            existing.setName(customer.getName());
-            existing.setPhone(customer.getPhone());
-            existing.setEmail(customer.getEmail());
-            existing.setAddress(customer.getAddress());
+    public Customer update(int id, Customer customer) {
+        Customer existing = findById(id);
 
-        }else{
-            throw new ResourceNotFoundException("Customer Not Found");
-        }
+        existing.setName(customer.getName());
+        existing.setPhone(customer.getPhone());
+        existing.setEmail(customer.getEmail());
+        existing.setAddress(customer.getAddress());
+
         return existing;
     }
 
-    public List<Customer> findAll(){
+    public List<Customer> findAll() {
         return customers;
     }
-
 }
+
