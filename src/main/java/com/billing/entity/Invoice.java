@@ -1,6 +1,7 @@
 package com.billing.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Invoice {
     private int InvoiceId;
@@ -20,6 +21,8 @@ public class Invoice {
         this.discount = discount;
         this.finalAmount = finalAmount;
     }
+
+    public Invoice(){}
 
     public int getInvoiceId() {
         return InvoiceId;

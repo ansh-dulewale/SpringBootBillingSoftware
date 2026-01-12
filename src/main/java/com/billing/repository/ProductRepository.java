@@ -45,4 +45,8 @@ public class ProductRepository {
             throw new ResourceNotFoundException("Product Not Found");
         }
     }
+
+    public List<Product> getByStock(){
+        return list.stream().filter(p -> p.getStockQuantity() > 0).toList();
+    }
 }

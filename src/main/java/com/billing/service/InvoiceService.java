@@ -1,13 +1,13 @@
-package com.billing.service;
-import com.billing.entity.Customer;
-import com.billing.entity.Invoice;
-import com.billing.entity.InvoiceItem;
-import com.billing.repository.CustomerRepository;
-import com.billing.repository.ProductRepository;
+    package com.billing.service;
 
-public class InvoiceService {
-    ProductRepository pr = new ProductRepository();
-    public Customer getIdService(int id){
-        return customers.get(id);
+    import com.billing.dto.InvoiceRequestDTO;
+    import com.billing.entity.Invoice;
+
+    import java.util.List;
+
+    public interface InvoiceService {
+        Invoice createInvoice(InvoiceRequestDTO invoiceRequestDTO);
+        Invoice getInvoiceByid(int id);
+        List<Invoice> getAllInvoices();
+        List<Invoice> getInvoicesByCustomer(int cutomerId);
     }
-}

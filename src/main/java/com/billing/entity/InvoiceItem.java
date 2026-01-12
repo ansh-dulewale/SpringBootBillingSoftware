@@ -2,6 +2,7 @@ package com.billing.entity;
 
 public class InvoiceItem {
     private int invoiceItemId;
+    private int InvoiceId;
     private Product product;
     private int quantity;
     private int price;
@@ -17,8 +18,14 @@ public class InvoiceItem {
         this.total = total;
     }
 
+    public InvoiceItem(){}
     public int getInvoiceItemId() {
         return invoiceItemId;
+    }
+
+    public void getInvoiceId(Invoice invoice){
+        Invoice in = new Invoice();
+        this.InvoiceId = in.getInvoiceId();
     }
 
     public void setInvoiceItemId(int invoiceItemId) {
