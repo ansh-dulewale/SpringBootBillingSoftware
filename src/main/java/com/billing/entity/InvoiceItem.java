@@ -1,5 +1,8 @@
     package com.billing.entity;
 
+    import org.springframework.transaction.annotation.Transactional;
+
+    @Transactional
     public class InvoiceItem {
         private Integer invoiceItemId;
         private Integer InvoiceId;

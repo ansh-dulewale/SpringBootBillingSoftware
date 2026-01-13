@@ -1,4 +1,5 @@
 package com.billing.controller;
+import com.billing.dao.ProductDao;
 import com.billing.entity.Product;
 import com.billing.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
     private ProductService service;
+    ProductDao productDao;
 
     public ProductController(ProductService productService){
 

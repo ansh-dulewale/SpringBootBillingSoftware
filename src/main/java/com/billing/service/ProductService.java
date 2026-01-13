@@ -1,5 +1,6 @@
 package com.billing.service;
 
+import com.billing.dao.ProductDao;
 import com.billing.entity.Product;
 import com.billing.exception.ResourceNotFoundException;
 import com.billing.repository.ProductRepository;
@@ -12,6 +13,7 @@ import java.util.List;
 @Service
 public class ProductService {
     private final ProductRepository repository;
+    ProductDao productDao = new ProductDao();
 
     public ProductService(ProductRepository repository) {
         this.repository = repository;
@@ -22,38 +24,19 @@ public class ProductService {
     }
 
     public Product createProduct(Product product){
-        try {
-            repository.save(product);
-        }catch (Exception e){
-            System.out.println(e);
-            throw e;
-        }
-        return product;
+        return productDao.saveInterface(product);
     }
 
     public Product findById(int id){
-        try {
-            return repository.findById(id);
-        }catch (Exception e){
-            throw e;
-        }
+        return productDao.getByIdInteraface(id);
     }
 
     public Product deleteById(int id){
-        try {
-            return repository.deleteById(id);
-
-        }catch (Exception e){
-            throw e;
-        }
+        return productDao.deleteByIdInterface(id);
     }
 
     public Product updateProduct(int id, Product product){
-        try {
-            return repository.updateById(id, product);
-        }catch (ResourceNotFoundException e){
-            throw e;
-        }
+        return productDao.updateInterface(id, product);
     }
 
 }
