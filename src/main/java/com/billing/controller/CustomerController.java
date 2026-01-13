@@ -1,7 +1,7 @@
 package com.billing.controller;
 
 import com.billing.entity.Customer;
-import com.billing.service.CustomerService;
+import com.billing.service.CustomerServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private final CustomerService service;
+    private final CustomerServiceImpl service;
 
-    public CustomerController(CustomerService service) {
+    public CustomerController(CustomerServiceImpl service) {
         this.service = service;
     }
 
