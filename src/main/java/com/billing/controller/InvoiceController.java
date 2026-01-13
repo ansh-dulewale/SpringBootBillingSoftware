@@ -14,34 +14,36 @@ import java.util.List;
 @RestController
 @RequestMapping("/invoice")
 public class InvoiceController {
-    private InvoiceServiceImpl service;
 
-    public InvoiceController(InvoiceServiceImpl service) {
+    private final InvoiceService service;
+
+    public InvoiceController(InvoiceService service) {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Invoice> createInvoice(@RequestBody InvoiceRequestDTO invoiceRequestDTO){
-        try{
-            return new ResponseEntity<>(service.createInvoice(invoiceRequestDTO),HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    @PostMapping
+    public ResponseEntity<Invoice> createInvoice(
+            @RequestBody InvoiceRequestDTO invoiceRequestDTO) {
+
+        return new ResponseEntity<>(
+                service.createInvoice(invoiceRequestDTO),
+                HttpStatus.CREATED
+        );
     }
 
     @GetMapping
-    public ResponseEntity<List<Invoice>> getInvoice(){
-            return ResponseEntity.ok(service.getAllInvoices());
+    public ResponseEntity<List<Invoice>> getInvoice() {
+        return ResponseEntity.ok(service.getAllInvoices());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Invoice> getInvoiceById(@PathVariable int id){
+    public ResponseEntity<Invoice> getInvoiceById(@PathVariable int id) {
         return ResponseEntity.ok(service.getInvoiceByid(id));
     }
 
-
     @GetMapping("/customer/{id}")
-    public ResponseEntity<List<Invoice>> getCustomer(@PathVariable int id){
+    public ResponseEntity<List<Invoice>> getByCustomer(@PathVariable int id) {
         return ResponseEntity.ok(service.getInvoicesByCustomer(id));
     }
 }
+

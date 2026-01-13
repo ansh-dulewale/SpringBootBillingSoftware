@@ -13,60 +13,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private ProductService service;
-    ProductDao productDao;
 
-    public ProductController(ProductService productService){
+    private final ProductService service;
 
-        this.service = productService;
+    public ProductController(ProductService service) {
+        this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Product>> getAll(){
-        try {
-            return new ResponseEntity<>(service.getAllProducts(),HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    @GetMapping
+    public ResponseEntity<List<Product>> getAll() {
+        return ResponseEntity.ok(service.getAllProducts());
     }
 
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
-
-        return new ResponseEntity<>(service.createProduct(product),HttpStatus.CREATED);
-
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(service.createProduct(product), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable int id){
-        try {
-            return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Product> getById(@PathVariable int id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Product> deleteById(@PathVariable int id){
-        try {
-            return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateById(
+            @PathVariable int id,
+            @RequestBody Product product) {
+        return ResponseEntity.ok(service.updateProduct(id, product));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Product> updateById(@PathVariable int id, @RequestBody Product p){
-        try {
-            return ResponseEntity.ok(service.updateProduct(id,p));
-        }catch (Exception e){
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/{search}")
-    public List<Product> search(){
-        return service.getAllProducts();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable int id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
+

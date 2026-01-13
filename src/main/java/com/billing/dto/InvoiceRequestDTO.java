@@ -1,25 +1,36 @@
 package com.billing.dto;
+
 import com.billing.entity.Customer;
 import com.billing.entity.InvoiceItem;
-import com.billing.entity.Product;
-import com.billing.repository.ProductRepository;
-
 import java.util.List;
 
 public class InvoiceRequestDTO {
+
     private Customer customer;
     private List<InvoiceItem> items;
     private int discount;
 
-    public int customerId(Customer customer){
-        return customer.getId();
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Customer cust){
-        customer.setId(cust.getId());
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public List<InvoiceItem> getItems(){
+    public List<InvoiceItem> getItems() {
         return items;
+    }
+
+    public void setItems(List<InvoiceItem> items) {
+        this.items = items;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }

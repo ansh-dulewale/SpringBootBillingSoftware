@@ -4,14 +4,15 @@ import com.billing.entity.Product;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class ProductDao implements ProductDaoInterface{
-    JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    Product product = new Product();
+@Repository
+public class ProductDao implements ProductDaoInterface {
 
-    public ProductDao(){}
+    private final JdbcTemplate jdbcTemplate;
+
     public ProductDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -19,14 +20,13 @@ public class ProductDao implements ProductDaoInterface{
     @Override
     public List<Product> getAll() {
         return jdbcTemplate.query(
-                "Select * from Product",
+                "SELECT * FROM product",
                 new BeanPropertyRowMapper<>(Product.class)
         );
     }
 
     @Override
     public Product saveInterface(Product product) {
-
         String sql = "INSERT INTO product (id, name, price, gst, stock) VALUES (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(
@@ -36,36 +36,29 @@ public class ProductDao implements ProductDaoInterface{
                 product.getPrice(),
                 product.getGstPercentage(),
                 product.getStockQuantity()
-                , new BeanPropertyRowMapper<>(Product.class)
         );
-
         return product;
     }
 
     @Override
     public Product getByIdInteraface(int id) {
-        String sql = "Select * from Product where id = ?";
         return jdbcTemplate.queryForObject(
-                sql,
-                new BeanPropertyRowMapper<>(Product.class), id
+                "SELECT * FROM product WHERE id = ?",
+                new BeanPropertyRowMapper<>(Product.class),
+                id
         );
     }
 
     @Override
-    public Product deleteByIdInterface(int id) {
-        String sql = "DELETE FROM PRODUCT WHERE id = ?";
-        return jdbcTemplate.queryForObject(
-                sql,
-                new BeanPropertyRowMapper<>(Product.class), id
-        );
+    public void deleteByIdInterface(int id) {
+        jdbcTemplate.update("DELETE FROM product WHERE id = ?", id);
     }
 
     @Override
     public Product updateInterface(int id, Product product) {
+        String sql = "UPDATE product SET name=?, price=?, gst=?, stock=? WHERE id=?";
 
-        String sql = "UPDATE product SET name = ?, price = ?, gst = ?, stock = ? WHERE id = ?";
-
-        int rows = jdbcTemplate.update(
+        jdbcTemplate.update(
                 sql,
                 product.getName(),
                 product.getPrice(),
@@ -73,7 +66,7 @@ public class ProductDao implements ProductDaoInterface{
                 product.getStockQuantity(),
                 id
         );
-        return product;
+        return getByIdInteraface(id);
     }
-
 }
+

@@ -1,7 +1,6 @@
 package com.billing.service;
 
 import com.billing.entity.Customer;
-import com.billing.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import com.billing.service.CustSer;
 import java.util.List;
